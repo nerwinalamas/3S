@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import Search from "../components/Search";
+import { ProductContext } from "../context/ProductContext";
+import { BsCartPlus } from "react-icons/bs";
 
-const Card = ({ isData, isLoading }) => {
+const Card = () => {
+  const { isData, isLoading, cart, handleAddToCart } =
+    useContext(ProductContext);
+
   const [isSearching, setIsSearching] = useState("");
   const [byCategory, setByCategory] = useState("");
 
@@ -39,11 +44,12 @@ const Card = ({ isData, isLoading }) => {
         {isLoading
           ? "Loading... "
           : items.map((d) => (
-              <Link to={`/products/${d.id}`} key={d.id}>
-                <div
-                  title={d.title}
-                  className=" w-44 h-64 flex flex-col rounded-md hover:border-solid hover:border-2 hover:border-slate-300 hover:cursor-pointer"
-                >
+              <div
+                title={d.title}
+                key={d.id}
+                className=" w-44 h-64 flex flex-col rounded-md hover:border-solid hover:border-2 hover:border-slate-300 hover:cursor-pointer"
+              >
+                <Link to={`/products/${d.id}`}>
                   <div className="p-2">
                     <img
                       src={d.image}
@@ -51,16 +57,20 @@ const Card = ({ isData, isLoading }) => {
                       className="w-full h-32 object-contain"
                     />
                   </div>
-                  <div className="h-full p-2 relative">
-                    <h6 className="text-sm text-slate-700 truncate">
-                      {d.title}
-                    </h6>
-                    <p className="absolute bottom-2 text-xl text-red-600">
-                      ${d.price}
-                    </p>
+                </Link>
+                <div className="h-full p-2 relative">
+                  <h6 className="text-sm text-slate-700 truncate">{d.title}</h6>
+                  <div className="w-40 flex justify-between absolute bottom-2">
+                    <p className="text-xl text-red-600">${d.price}</p>
+                    <button>
+                      <BsCartPlus
+                        className="text-2xl mr-3"
+                        onClick={() => handleAddToCart(d.id)}
+                      />
+                    </button>
                   </div>
                 </div>
-              </Link>
+              </div>
             ))}
       </div>
       <p className="text-slate-800 text-xs font-medium my-10">

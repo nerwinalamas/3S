@@ -1,13 +1,15 @@
-import React from "react";
-import {useParams } from "react-router-dom";
+import React, { useContext } from "react";
+import { useParams } from "react-router-dom";
+import { ProductContext } from "../context/ProductContext";
 
-const CardDetails = ({ isData }) => {
+const CardDetails = () => {
+  const {isData, handleAddToCart} = useContext(ProductContext);
+
   const { id } = useParams();
   const product = isData[id - 1];
 
   return (
     <div className="h-screen flex justify-center items-center flex-col md:mx-auto">
-
       <div className="flex-1 w-80 md:max-w-5xl mx-1 py-3 overscroll-none md:flex md:justify-center md:items-center md:w-screen md:px-10 md:gap-5">
         <div className="w-full h-80 md:flex-1">
           <img
@@ -26,7 +28,10 @@ const CardDetails = ({ isData }) => {
 
           <div className="hidden md:w-full md:flex md:justify-between md:mt-4 md:bottom-0">
             <p className="text-3xl text-red-700">${product.price}</p>
-            <button className="w-auto h-10 px-4 py-2 rounded bg-orange-700 text-white hover:bg-white hover:text-orange-700 hover:border-solid hover:border-2 hover:cursor-pointer">
+            <button
+              onClick={() => handleAddToCart(product.id)}
+              className="w-auto h-10 px-4 py-2 rounded bg-orange-700 text-white hover:bg-white hover:text-orange-700 hover:border-solid hover:border-2 hover:cursor-pointer"
+            >
               Add to Cart
             </button>
           </div>
@@ -35,7 +40,10 @@ const CardDetails = ({ isData }) => {
 
       <div className="w-full flex justify-between items-center h-16 p-2 bottom-0 sticky font-semibold bg-white drop-shadow md:hidden">
         <p className="text-3xl text-red-700">${product.price}</p>
-        <button className="w-auto h-10 px-4 py-2 rounded bg-orange-700 text-white hover:bg-white hover:text-orange-700 hover:border-solid hover:border-2 hover:cursor-pointer">
+        <button
+          onClick={() => handleAddToCart(product.id)}
+          className="w-auto h-10 px-4 py-2 rounded bg-orange-700 text-white hover:bg-white hover:text-orange-700 hover:border-solid hover:border-2 hover:cursor-pointer"
+        >
           Add to Cart
         </button>
       </div>
