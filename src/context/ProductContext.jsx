@@ -23,7 +23,7 @@ export const ProductProvider = (props) => {
   const handleAddToCart = (productId) => {
     const productToAdd = isData.find((product) => product.id === productId);
     if (productToAdd) {
-      setCart([...cart, productToAdd]);
+      setCart([productToAdd, ...cart]);
     }
   };
 
@@ -31,11 +31,16 @@ export const ProductProvider = (props) => {
     setCart([])
   }
 
+  const handleRemove = (id) => { 
+    const products = cart.filter(item => item.id !== id)
+    setCart(products);
+   }
+
   console.log(cart);
 
   return (
     <ProductContext.Provider
-      value={{ isData, isLoading, handleAddToCart, cart, handleRemoveAll }}
+      value={{ isData, isLoading, handleAddToCart, cart, handleRemoveAll, handleRemove }}
     >
       {props.children}
     </ProductContext.Provider>

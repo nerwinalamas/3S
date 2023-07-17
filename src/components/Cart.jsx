@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useContext } from "react";
 import { ProductContext } from "../context/ProductContext";
 import { Link } from "react-router-dom";
+import { TiDelete } from "react-icons/ti";
 
 const contactDetails = {
   name: "",
@@ -10,7 +11,7 @@ const contactDetails = {
 };
 
 const Cart = () => {
-  const { cart, handleRemoveAll } = useContext(ProductContext);
+  const { cart, handleRemoveAll, handleRemove } = useContext(ProductContext);
   const [inputForm, setInputForm] = useState(contactDetails);
 
   const totalCost = () => {
@@ -37,24 +38,29 @@ const Cart = () => {
         ) : (
           cart.map((items, index) => {
             return (
-              <div key={items.id} className="w-80 h-40 flex gap-4 px-2 ">
-                <div>
+              <div key={items.id} className="w-80 h-36 flex gap-4 px-2 mb-2 rounded-lg bg-slate-100">
+                <div className="">
                   <img
                     src={items.image}
                     alt={items.title}
-                    className="h-full object-contain"
+                    className="h-full w-20 object-contain"
                   />
                 </div>
-                <div className="w-full flex flex-col justify-center">
-                  <p className="text-sm">{items.title} </p>
-                  <p className="text-lg text-red-700 font-medium">
-                    ${items.price}
-                  </p>
-                  {/* <div className="flex items-center justify-start pl-10 gap-5">
+                <div className="relative flex-1 flex flex-col items-end">
+                  <div className="h-8 w-8 flex items-center justify-center text-xl my-2 rounded bg-slate-100 hover:cursor-pointer">
+                    <TiDelete onClick={() => handleRemove(items.id)} className="text-slate-400"/>
+                  </div>
+                  <div className="w-full flex flex-col justify-center">
+                    <p className="text-sm">{items.title} </p>
+                    <p className="text-lg text-red-700 font-medium">
+                      ${items.price}
+                    </p>
+                    {/* <div className="flex items-center justify-start pl-10 gap-5">
                     <p>-</p>
                     <p>1</p>
                     <p>+</p>
                   </div> */}
+                  </div>
                 </div>
               </div>
             );
