@@ -23,24 +23,61 @@ export const ProductProvider = (props) => {
   const handleAddToCart = (productId) => {
     const productToAdd = isData.find((product) => product.id === productId);
     if (productToAdd) {
-      setCart([productToAdd, ...cart]);
+      const productExist = cart.find((cartItem) => cartItem.id === productId);
+      if (productExist) {
+        let itemQuantity = cart.map((item) =>
+          item.id === productId
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+        setCart(itemQuantity);
+      } else {
+        setCart([ { ...productToAdd, quantity: 1 }, ...cart]);
+      }
+    }
+  };
+
+  const handleIncreaseQuantity = (productId) => {
+    const productExist = cart.find((cartItem) => cartItem.id === productId);
+    if (productExist) {
+      let itemQuantity = cart.map((item) =>
+        item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
+      );
+      setCart(itemQuantity);
+    }
+  };
+
+  const handleDecreaseQuantity = (productId) => {
+    const productExist = cart.find((cartItem) => cartItem.id === productId); 
+    if (productExist) {
+      let itemQuantity = cart.map((item) =>
+        item.id === productId ? { ...item, quantity: Math.max(item.quantity - 1, 0) } : item
+      ).filter((item) => item.quantity > 0);
+      setCart(itemQuantity);
     }
   };
 
   const handleRemoveAll = () => {
-    setCart([])
-  }
+    setCart([]);
+  };
 
-  const handleRemove = (id) => { 
-    const products = cart.filter(item => item.id !== id)
+  const handleRemove = (id) => {
+    const products = cart.filter((item) => item.id !== id);
     setCart(products);
-   }
-
-  console.log(cart);
+  };
 
   return (
     <ProductContext.Provider
-      value={{ isData, isLoading, handleAddToCart, cart, handleRemoveAll, handleRemove }}
+      value={{
+        isData,
+        isLoading,
+        cart,
+        handleAddToCart,
+        handleIncreaseQuantity,
+        handleDecreaseQuantity,
+        handleRemoveAll,
+        handleRemove,
+      }}
     >
       {props.children}
     </ProductContext.Provider>

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { ProductContext } from "../context/ProductContext";
 
 const CardDetails = () => {
-  const {isData, handleAddToCart} = useContext(ProductContext);
+  const { isData, handleAddToCart } = useContext(ProductContext);
 
   const { id } = useParams();
   const product = isData[id - 1];
@@ -22,12 +22,18 @@ const CardDetails = () => {
           <h1 className="font-semibold text-xl md:text-2xl lg:text-3xl">
             {product.title}
           </h1>
-          <p className="h-40 mt-4 font-thin text-sm overflow-y-auto md:text-md md:font-normal md:overflow-y-auto md:h-40">
+          <p className="text-xs text-slate-500 md:text-sm">
+            (Rating: {product.rating.rate}/5 - {product.rating.count} sold)
+          </p>
+
+          <p className="h-auto max-h-40 mt-4 font-thin text-sm overflow-y-auto md:text-md md:font-normal md:overflow-y-auto md:h-40">
             {product.description}
           </p>
 
           <div className="hidden md:w-full md:flex md:justify-between md:mt-4 md:bottom-0">
-            <p className="text-3xl text-red-700">${product.price}</p>
+            <p className="text-3xl font-medium text-red-700">
+              ${product.price}
+            </p>
             <button
               onClick={() => handleAddToCart(product.id)}
               className="w-auto h-10 px-4 py-2 rounded bg-orange-700 text-white hover:bg-white hover:text-orange-700 hover:border-solid hover:border-2 hover:cursor-pointer"

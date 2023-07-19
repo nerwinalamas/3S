@@ -59,7 +59,8 @@ const Card = () => {
                   </div>
                 </Link>
                 <div className="h-full p-2 relative">
-                  <h6 className="text-sm text-slate-700 truncate">{d.title}</h6>
+                  <h5 className="text-sm text-slate-700 truncate">{d.title}</h5>
+                  <p className="text-xs text-slate-500">(Rating: {d.rating.rate}/5 - {d.rating.count} sold)</p>
                   <div className="w-40 flex justify-between absolute bottom-2">
                     <p className="text-xl text-red-600">${d.price}</p>
                     <button>

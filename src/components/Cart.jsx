@@ -11,7 +11,7 @@ const contactDetails = {
 };
 
 const Cart = () => {
-  const { cart, handleRemoveAll, handleRemove } = useContext(ProductContext);
+  const { cart, handleRemoveAll, handleRemove, handleIncreaseQuantity, handleDecreaseQuantity } = useContext(ProductContext);
   const [inputForm, setInputForm] = useState(contactDetails);
 
   const totalCost = () => {
@@ -55,11 +55,12 @@ const Cart = () => {
                     <p className="text-lg text-red-700 font-medium">
                       ${items.price}
                     </p>
-                    {/* <div className="flex items-center justify-start pl-10 gap-5">
-                    <p>-</p>
-                    <p>1</p>
-                    <p>+</p>
-                  </div> */}
+                    <div className="flex items-center justify-start pl-10 gap-5 mt-1">
+                    <button onClick={() => handleDecreaseQuantity(items.id)} className="flex justify-center items-center h-5 w-5 bg-slate-200 rounded">-</button>
+                    <p>{items.quantity}</p>
+                    <button onClick={() => handleIncreaseQuantity(items.id)}
+                     className="flex justify-center items-center h-5 w-5 bg-slate-200 rounded">+</button>
+                  </div>
                   </div>
                 </div>
               </div>
