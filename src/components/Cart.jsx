@@ -17,7 +17,7 @@ const Cart = () => {
   const totalCost = () => {
     let total = 0;
     cart.forEach((item) => {
-      total += item.price;
+      total += (item.price * item.quantity);
     });
     return total;
   };
@@ -36,10 +36,10 @@ const Cart = () => {
         {cart.length === 0 ? (
           <p>Empty Cart</p>
         ) : (
-          cart.map((items, index) => {
+          cart.map((items) => {
             return (
-              <div key={items.id} className="w-80 h-36 flex gap-4 px-2 mb-2 rounded-lg bg-slate-100">
-                <div className="">
+              <div key={items.id} className="w-80 h-auto flex gap-4 px-2 mb-2 rounded-lg bg-slate-100">
+                <div>
                   <img
                     src={items.image}
                     alt={items.title}
@@ -55,7 +55,7 @@ const Cart = () => {
                     <p className="text-lg text-red-700 font-medium">
                       ${items.price}
                     </p>
-                    <div className="flex items-center justify-start pl-10 gap-5 mt-1">
+                    <div className="flex items-center justify-start pl-10 gap-5 my-1">
                     <button onClick={() => handleDecreaseQuantity(items.id)} className="flex justify-center items-center h-5 w-5 bg-slate-200 rounded">-</button>
                     <p>{items.quantity}</p>
                     <button onClick={() => handleIncreaseQuantity(items.id)}

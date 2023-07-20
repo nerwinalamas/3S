@@ -32,7 +32,7 @@ export const ProductProvider = (props) => {
         );
         setCart(itemQuantity);
       } else {
-        setCart([ { ...productToAdd, quantity: 1 }, ...cart]);
+        setCart([{ ...productToAdd, quantity: 1 }, ...cart]);
       }
     }
   };
@@ -48,11 +48,15 @@ export const ProductProvider = (props) => {
   };
 
   const handleDecreaseQuantity = (productId) => {
-    const productExist = cart.find((cartItem) => cartItem.id === productId); 
+    const productExist = cart.find((cartItem) => cartItem.id === productId);
     if (productExist) {
-      let itemQuantity = cart.map((item) =>
-        item.id === productId ? { ...item, quantity: Math.max(item.quantity - 1, 0) } : item
-      ).filter((item) => item.quantity > 0);
+      let itemQuantity = cart
+        .map((item) =>
+          item.id === productId
+            ? { ...item, quantity: Math.max(item.quantity - 1, 0) }
+            : item
+        )
+        .filter((item) => item.quantity > 0);
       setCart(itemQuantity);
     }
   };
@@ -66,6 +70,14 @@ export const ProductProvider = (props) => {
     setCart(products);
   };
 
+  const handleTotalQuantity = () => {
+    let total = 0;
+    cart.forEach((item) => {
+      total += item.quantity;
+    });
+    return total;
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -77,6 +89,7 @@ export const ProductProvider = (props) => {
         handleDecreaseQuantity,
         handleRemoveAll,
         handleRemove,
+        handleTotalQuantity,
       }}
     >
       {props.children}
