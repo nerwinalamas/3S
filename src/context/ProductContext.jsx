@@ -20,6 +20,17 @@ export const ProductProvider = (props) => {
       });
   };
 
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      setCart(JSON.parse(savedCart));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
   const handleAddToCart = (productId) => {
     const productToAdd = isData.find((product) => product.id === productId);
     if (productToAdd) {
